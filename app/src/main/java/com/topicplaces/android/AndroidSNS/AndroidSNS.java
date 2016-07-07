@@ -1,10 +1,12 @@
 package com.topicplaces.android.AndroidSNS;
 
 import com.topicplaces.android.AndroidSNS.Topics.TopicCreator;
+import com.topicplaces.android.AndroidSNS.Topics.TopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Users.*;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Map;
 
 public class AndroidSNS{
 
@@ -67,7 +69,7 @@ public class AndroidSNS{
         ensureConnection();
 
         RESTLogin logg = new RESTLogin(ENDPOINT);
-        return logg.login( username, password );
+        return logg.login(username, password);
     }
 
     /**
@@ -79,8 +81,7 @@ public class AndroidSNS{
      * @return The ID code of the newly created topic (in format "t-[id]")
      */
 
-    public String newPublicTopic(String title, String authkey)
-    {
+    public String newPublicTopic(String title, String authkey) {
         ensureConnection();
 
         TopicCreator tc = new TopicCreator( ENDPOINT );
@@ -93,6 +94,35 @@ public class AndroidSNS{
         }
 
         return topicID;
+    }
+
+    /**
+     *
+     * Retrieves all of a user's public topics.
+     *
+     * @param userID The user ID (in format "u-[id]") to retrieve public topics from.
+     * @return A list of all of the user's public topics and their associated IDs (in format "t-[id]")
+     */
+    public Map<String, String> getPublicTopicMap(String userID) {
+        ensureConnection();
+        TopicsListRetriever ptlr = new TopicsListRetriever(ENDPOINT);
+
+        return ptlr.getList(userID);
+    }
+
+    /**
+     *
+     * Gets the username associated with a valid user at the endpoint.
+     *
+     * @param user The user ID to retrieve the username for.
+     * @return The ID of the user (in format "u-[id]"), or the empty string ("") if the user doesn't exist.
+     */
+    public String verifyUsername(String user) {
+
+        ensureConnection();
+        UserRetriever getUserID = new UserRetriever(ENDPOINT);
+
+        return getUserID.getUserFromIDorEmail(user);
     }
 
 

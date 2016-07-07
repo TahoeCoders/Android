@@ -14,12 +14,10 @@ import com.topicplaces.android.AndroidSNS.AndroidSNS;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button testButton;
-    String authKey;
-    String username;
-    String password;
+    private Button testButton, verifyUserID;
+    private String authKey, userID;
+    private String user, pass;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
-    String topicName = "OfficialTest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                username = "stanleyr001";
-                password = "stanleyr001";
+                user = "stanleyr001";
+                pass = "stanleyr001";
 
-                AndroidSNS AndroidSNSController = new AndroidSNS(ENDPOINT);
+                AndroidSNS sns = new AndroidSNS(ENDPOINT);
 
                 ConnectivityManager cm =
                         (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -46,43 +44,41 @@ public class MainActivity extends AppCompatActivity {
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
                 if (networkInfo != null && networkInfo.isConnected()) {
-                    authKey = AndroidSNSController.acquireKey(username, password);
+                    authKey = sns.acquireKey(user, pass);
                 }else{
                     Log.d("Network", "Failure to connect");
                 }
                 Log.d("authKey ", authKey);
 
-
-                //Now create new topic
-
-                String tid = AndroidSNSController.newPublicTopic(topicName, authKey);
-                Log.d("TID", tid);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
         });
 
+        verifyUserID = (Button)findViewById(R.id.verifyUserID);
+        verifyUserID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                StrictMode.ThreadPolicy policy =
+                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+
+                user = "stanleyr001";
+                pass = "stanleyr001";
+
+                AndroidSNS sns = new AndroidSNS(ENDPOINT);
+
+                ConnectivityManager cm =
+                        (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    userID = sns.verifyUsername(user);
+                    Log.d("u-[id] ", userID);
+                }else{
+                    Log.d("Network", "Failure to connect");
+                }
+            }
+        });
     }
 }
