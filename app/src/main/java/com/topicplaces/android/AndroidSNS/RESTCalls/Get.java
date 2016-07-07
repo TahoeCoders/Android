@@ -15,9 +15,17 @@ public class Get {
     private HttpURLConnection urlConnection;
     String returnString;
 
+    /**
+     * Create new Get class.
+     *
+     * @param endpoint The endpoint to retrieve data.
+     * @param authKey The authentication key.
+     */
+
     public Get(String endpoint, String authKey) {
 
         try {
+            //Create new HttpURLConnection and set properties.
             url = new URL(endpoint);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoInput(true);
@@ -29,11 +37,12 @@ public class Get {
             }
             */
 
+            //Set authKey as request property if appropriate.
             if (authKey != null) {
                 urlConnection.setRequestProperty("Cookie", authKey);
             }
 
-
+        //Catch exceptions.
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -41,8 +50,15 @@ public class Get {
         }
     }
 
+    /**
+     * Execute the given method.
+     *
+     * @return The return string from the HttpURLConnection.
+     */
+
     public String execute() {
         try {
+            //Request JSON.
             urlConnection.setRequestProperty("Content-Type","application/json");
 
             Log.d("Get_ResponseCode", urlConnection.getResponseCode() +"");
@@ -54,6 +70,7 @@ public class Get {
             */
 
             //From ServiceDog
+            //Create new reader and build String.
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
             returnString = null;
@@ -65,7 +82,7 @@ public class Get {
                 returnString += line;
             }
 
-
+        //Catch exceptions.
         } catch (IOException e) {
             e.printStackTrace();
             Log.d("exception", "IO");
@@ -76,8 +93,5 @@ public class Get {
 
         Log.d("Get_returnString", returnString);
         return returnString;
-
-        //return "Get.execute() return String";
-
     }
 }

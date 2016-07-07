@@ -20,18 +20,28 @@ public class Post {
     String outputString;
     String returnString;
 
+    /**
+     * Cheats a post object.
+     *
+     * @param endpoint The destination to post.
+     * @param authKey The authentication key.
+     */
+
     public Post (String endpoint, String authKey) {
         try {
+            //Create HttpURLConnection and set properties.
             URL url = new URL(endpoint);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
             urlConnection.setDoInput(true);
 
+            //Add authKey if appropriate.
             if (authKey != null) {
                 urlConnection.setRequestProperty("Cookie", authKey);
             }
 
+        //Catch exceptions
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -39,17 +49,30 @@ public class Post {
         }
     }
 
+    /**
+     * Add a JSON to the HttpURLConnection as request property.
+     *
+     * @param json the JSON to add.
+     */
+
     public void addJson(JSONObject json) {
 
         urlConnection.setRequestProperty("Content-Type","application/json");
         outputString = json.toString();
     }
 
+    /**
+     * Execute the post method.
+     *
+     * @return The string from the server.
+     */
+
     public String execute() {
         try {
             urlConnection.getOutputStream().write(outputString.getBytes());
 
             //From ServiceDog
+            //Create new reader and build String.
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
             returnString = null;
@@ -68,6 +91,7 @@ public class Post {
             }
             */
 
+        //Catch exceptions.
         } catch (IOException e) {
             e.printStackTrace();
             Log.d("exception", "IO");
