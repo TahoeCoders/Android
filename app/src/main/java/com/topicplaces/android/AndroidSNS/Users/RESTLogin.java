@@ -1,7 +1,6 @@
 package com.topicplaces.android.AndroidSNS.Users;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,10 +18,12 @@ public class RESTLogin {
 
         String authKey = null;
 
+        HttpURLConnection urlConnection = null;
+
         try {
 
             URL url = new URL(ENDPOINT + "sessions");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
             urlConnection.setChunkedStreamingMode(0);
@@ -45,8 +46,7 @@ public class RESTLogin {
 
             */
 
-            OutputStream output = (urlConnection.getOutputStream());
-            output.write(bytesOut);
+            urlConnection.getOutputStream().write(bytesOut);
 
             /*
             for (Map.Entry<String, List<String>> header : urlConnection.getHeaderFields().entrySet()) {
@@ -62,8 +62,11 @@ public class RESTLogin {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            urlConnection.disconnect();
         }
 
         return authKey;
     }
+
 }

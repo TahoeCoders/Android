@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     String username;
     String password;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
+    String topicName = "OfficialTest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //Now create new topic
 
-                //AndroidSNSController.newPublicTopic("PuppyDog", authKey);
+                String tid = AndroidSNSController.newPublicTopic(topicName, authKey);
+                Log.d("TID", tid);
 
 
 

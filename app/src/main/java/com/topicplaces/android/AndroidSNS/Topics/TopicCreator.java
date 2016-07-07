@@ -1,6 +1,8 @@
 package com.topicplaces.android.AndroidSNS.Topics;
 
 
+import android.util.Log;
+
 import com.topicplaces.android.AndroidSNS.RESTCalls.Post;
 
 import org.json.JSONException;
@@ -23,13 +25,12 @@ public class TopicCreator {
         Post post = null;
 
 
-        /*
         if ( priv ) {
             post = new Post(ENDPOINT + "groups", authC );
         } else {
             post = new Post(ENDPOINT + "topics", authC );
         }
-        */
+
 
         // Create the groups array for the groups property.
         JSONObject json = new JSONObject();
@@ -42,17 +43,20 @@ public class TopicCreator {
             e.printStackTrace();
         }
 
-        //post.addJson( json );
+
+        post.addJson( json );
 
         String beginning = null;
         if ( priv ) {
             beginning = "grp-";
-
         } else {
             beginning = "t-";
         }
 
-        /*
+        String response = post.execute();
+
+        Log.d("postResponse", response);
+
         int index = response.indexOf( "{\"val\":\"" + beginning );
 
         if ( index == -1 ) return null;
@@ -60,8 +64,6 @@ public class TopicCreator {
         index = response.indexOf( beginning, index );
 
         return response.substring(index, response.indexOf( "\"", index ));
-        */
 
-        return null;
     }
 }
