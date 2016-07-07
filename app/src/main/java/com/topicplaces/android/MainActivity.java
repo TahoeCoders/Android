@@ -14,7 +14,7 @@ import com.topicplaces.android.AndroidSNS.AndroidSNS;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button testButton, verifyUserID;
+    private Button testButton_PublicTopic, testButton_PrivateTopic, verifyUserID;
     private String authKey, userID;
     private String user, pass;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
@@ -24,8 +24,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testButton = (Button)findViewById(R.id.testButton);
-        testButton.setOnClickListener(new View.OnClickListener() {
+        testButton_PublicTopic = (Button)findViewById(R.id.testButton_PublicTopic);
+        testButton_PublicTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                StrictMode.ThreadPolicy policy =
+                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+
+                user = "stanleyr001";
+                pass = "stanleyr001";
+
+                AndroidSNS sns = new AndroidSNS(ENDPOINT);
+
+                ConnectivityManager cm =
+                        (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    authKey = sns.acquireKey(user, pass);
+                }else{
+                    Log.d("Network", "Failure to connect");
+                }
+                Log.d("authKey ", authKey);
+
+            }
+        });
+
+        testButton_PrivateTopic = (Button)findViewById(R.id.testButton_PrivateTopic);
+        testButton_PrivateTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

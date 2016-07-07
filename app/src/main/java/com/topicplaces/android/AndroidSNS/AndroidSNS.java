@@ -126,24 +126,28 @@ public class AndroidSNS{
     }
 
 
+    /**
+     *
+     * Creates a new private topic.
+     *
+     * @param title The title/name of the new Private Topic
+     * @param authkey The authentication key. See "acquireKey()"
+     * @return The ID code of the newly created topic (in format "grp-[id]")
+     */
 
+    public String newPrivateTopic(String title, String authkey)
+    {
+        ensureConnection();
 
+        TopicCreator tc = new TopicCreator( ENDPOINT );
+        String topicID = tc.createTopic(title, true, authkey);
 
+        if ( topicID.equals( "" ) )
+        {
+            System.err.println( "Unable to create new topic" );
+            return "";
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return topicID;
+    }
 }
