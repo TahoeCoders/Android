@@ -1,11 +1,15 @@
 package com.topicplaces.android.AndroidSNS;
 
 import com.topicplaces.android.AndroidSNS.Topics.TopicCreator;
+import com.topicplaces.android.AndroidSNS.Topics.TopicDeleter;
 import com.topicplaces.android.AndroidSNS.Topics.TopicsListRetriever;
-import com.topicplaces.android.AndroidSNS.Users.*;
+import com.topicplaces.android.AndroidSNS.Users.RESTLogin;
+import com.topicplaces.android.AndroidSNS.Users.UserRetriever;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Map;
 
 public class AndroidSNS{
@@ -150,4 +154,23 @@ public class AndroidSNS{
 
         return topicID;
     }
+
+    /**
+     *
+     * Deletes a topic.
+     *
+     * @param id The ID of the topic to delete.
+     * @param isPrivate True if the topic is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     */
+    public void deleteTopic( String id, Boolean isPrivate, String authkey ) {
+        ensureConnection();
+        TopicDeleter tdel = new TopicDeleter( ENDPOINT );
+        tdel.execute(id, isPrivate, authkey);
+    }
+
+
+
+
+
 }
