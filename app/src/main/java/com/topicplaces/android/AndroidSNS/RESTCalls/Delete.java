@@ -40,6 +40,7 @@ public class Delete {
     public void execute() {
 
         try {
+            urlConnection.getResponseCode();
             Log.d("ResponseCode", urlConnection.getResponseCode() + "");
         } catch (IOException e) {
             e.printStackTrace();

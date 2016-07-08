@@ -2,6 +2,7 @@ package com.topicplaces.android.AndroidSNS;
 
 import com.topicplaces.android.AndroidSNS.Topics.TopicCreator;
 import com.topicplaces.android.AndroidSNS.Topics.TopicDeleter;
+import com.topicplaces.android.AndroidSNS.Topics.TopicUpdater;
 import com.topicplaces.android.AndroidSNS.Topics.TopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Users.RESTLogin;
 import com.topicplaces.android.AndroidSNS.Users.UserRetriever;
@@ -132,6 +133,22 @@ public class AndroidSNS{
 
     /**
      *
+     * Verifies that the email belongs to a valid user at the endpoint.
+     *
+     * @param email The email to verify.
+     * @return The ID of the user (in format "u-[id]"), or the empty string ("") if the user doesn't exist.
+     */
+    public String verifyEmail(String email)
+    {
+        ensureConnection();
+
+        return verifyUsername(email);
+    }
+
+
+
+    /**
+     *
      * Creates a new private topic.
      *
      * @param title The title/name of the new Private Topic
@@ -169,6 +186,23 @@ public class AndroidSNS{
         tdel.execute(id, isPrivate, authkey);
     }
 
+    /**
+     *
+     * Updates an existing topic.
+     *
+     * @param title The updated title of the topic. If null, title remains unchanged.
+     * @param desc The updated description of the topic. If null, description remains unchanged.
+     * @param media The updated media of the topic. If null, media remains unchanged.
+     * @param isPrivate True if the topic is private. False if public.
+     * @param TID The ID of the topic to be updated.
+     * @param authkey The authentication key. See "acquireKey."
+     */
+    public void updateTopic( String title, String desc, String media, Boolean isPrivate, String TID, String authkey ) {
+
+        ensureConnection();
+        TopicUpdater tupd = new TopicUpdater( ENDPOINT );
+        tupd.updateTopic(title, desc, media, isPrivate, TID, authkey);
+    }
 
 
 

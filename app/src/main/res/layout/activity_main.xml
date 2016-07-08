@@ -12,12 +12,12 @@
     tools:context="com.topicplaces.android.MainActivity">
 
     <Button
-        android:id="@+id/testButton_PrivateTopic"
+        android:id="@+id/CreatePrivateTopicButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Private Topic Test"
+        android:text="Create Private Topic"
         android:textSize="25sp"
         android:gravity="center"/>
 
@@ -27,12 +27,12 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/testButton_DeletePrivateTopic"
+        android:id="@+id/UpdateTopicButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Dlete Private Topic"
+        android:text="Update Private Topic"
         android:textSize="25sp"
         android:gravity="center"/>
 
@@ -42,29 +42,13 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/testButton_PublicTopic"
+        android:id="@+id/VerifyEmailButon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Public Topic Test"
+        android:text="Verify Email"
         android:textSize="25sp"
         android:gravity="center"/>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:id="@+id/verifyUserID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="#ffffff"
-        android:text="Verify User Test"
-        android:textSize="25sp"
-        android:gravity="center"/>
-
 
 </LinearLayout>

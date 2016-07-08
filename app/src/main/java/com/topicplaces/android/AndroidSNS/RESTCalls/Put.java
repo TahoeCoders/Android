@@ -2,6 +2,8 @@ package com.topicplaces.android.AndroidSNS.RESTCalls;
 
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,40 +11,37 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Get {
+/**
+ * Created by Stanley R on 7/8/2016.
+ */
+public class Put {
 
-    private URL url;
-    private HttpURLConnection urlConnection;
+    HttpURLConnection urlConnection;
+    String outputString;
     String returnString;
 
     /**
-     * Create new Get class.
+     * Cheats a post object.
      *
-     * @param endpoint The endpoint to retrieve data.
+     * @param endpoint The destination to post.
      * @param authKey The authentication key.
      */
 
-    public Get(String endpoint, String authKey) {
-
+    public Put (String endpoint, String authKey) {
         try {
-            //Create new HttpURLConnection and set properties.
-            url = new URL(endpoint);
+            //Create HttpURLConnection and set properties.
+            URL url = new URL(endpoint);
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("PUT");
+            urlConnection.setDoOutput(true);
             urlConnection.setDoInput(true);
-            urlConnection.setRequestMethod("GET");
 
-            /*
-            if (urlConnection.getResponseCode() != 200) {
-                throw new IOException(urlConnection.getResponseMessage());
-            }
-            */
-
-            //Set authKey as request property if appropriate.
+            //Add authKey if appropriate.
             if (authKey != null) {
                 urlConnection.setRequestProperty("Cookie", authKey);
             }
 
-        //Catch exceptions.
+            //Catch exceptions
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -51,21 +50,27 @@ public class Get {
     }
 
     /**
-     * Execute the given method.
+     * Add a JSON to the HttpURLConnection as request property.
      *
-     * @return The return string from the HttpURLConnection.
+     * @param json the JSON to add.
+     */
+
+    public void addJson(JSONObject json) {
+
+        urlConnection.setRequestProperty("Content-Type","application/json");
+        outputString = json.toString();
+    }
+
+    /**
+     * Execute the post method.
+     *
+     * @return The string from the server.
      */
 
     public String execute() {
         try {
-            //Request JSON.
-            urlConnection.setRequestProperty("Content-Type","application/json");
-
-            /*
-            for (Map.Entry<String, List<String>> header : urlConnection.getHeaderFields().entrySet()) {
-                Log.d("key=value", header.getKey() + " = " + header.getValue());
-            }
-            */
+            urlConnection.getOutputStream().write(outputString.getBytes());
+            ;
 
             //From ServiceDog
             //Create new reader and build String.
@@ -80,7 +85,14 @@ public class Get {
                 returnString += line;
             }
 
-        //Catch exceptions.
+            //debug code
+            /*
+            for (Map.Entry<String, List<String>> header : urlConnection.getHeaderFields().entrySet()) {
+                Log.d("key=value", header.getKey() + " = " + header.getValue());
+            }
+            */
+
+            //Catch exceptions.
         } catch (IOException e) {
             e.printStackTrace();
             Log.d("exception", "IO");
@@ -91,4 +103,9 @@ public class Get {
 
         return returnString;
     }
+
+
+
+
+
 }

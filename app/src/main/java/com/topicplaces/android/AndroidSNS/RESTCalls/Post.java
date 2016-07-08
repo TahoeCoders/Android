@@ -69,6 +69,7 @@ public class Post {
 
     public String execute() {
         try {
+            Log.d("POSTOutputSttring", outputString);
             urlConnection.getOutputStream().write(outputString.getBytes());
 
             //From ServiceDog
