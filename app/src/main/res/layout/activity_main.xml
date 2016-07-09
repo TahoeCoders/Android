@@ -12,12 +12,12 @@
     tools:context="com.topicplaces.android.MainActivity">
 
     <Button
-        android:id="@+id/CreatePrivateTopicButton"
+        android:id="@+id/DeleteUserButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Create Private Topic"
+        android:text="Delete User"
         android:textSize="25sp"
         android:gravity="center"/>
 
@@ -27,12 +27,12 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/UpdateTopicButton"
+        android:id="@+id/VerifyUserButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Update Private Topic"
+        android:text="Verify User"
         android:textSize="25sp"
         android:gravity="center"/>
 
@@ -42,12 +42,12 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/VerifyEmailButon"
+        android:id="@+id/NewUserButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Verify Email"
+        android:text="Create New User"
         android:textSize="25sp"
         android:gravity="center"/>
 

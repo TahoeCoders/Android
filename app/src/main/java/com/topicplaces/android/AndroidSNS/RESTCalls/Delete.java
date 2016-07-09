@@ -1,7 +1,5 @@
 package com.topicplaces.android.AndroidSNS.RESTCalls;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -41,7 +39,6 @@ public class Delete {
 
         try {
             urlConnection.getResponseCode();
-            Log.d("ResponseCode", urlConnection.getResponseCode() + "");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,10 +1,14 @@
 package com.topicplaces.android.AndroidSNS;
 
+import com.topicplaces.android.AndroidSNS.Topics.PrivateTopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Topics.TopicCreator;
 import com.topicplaces.android.AndroidSNS.Topics.TopicDeleter;
+import com.topicplaces.android.AndroidSNS.Topics.TopicRetriever;
 import com.topicplaces.android.AndroidSNS.Topics.TopicUpdater;
 import com.topicplaces.android.AndroidSNS.Topics.TopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Users.RESTLogin;
+import com.topicplaces.android.AndroidSNS.Users.UserCreator;
+import com.topicplaces.android.AndroidSNS.Users.UserDeleter;
 import com.topicplaces.android.AndroidSNS.Users.UserRetriever;
 
 import java.io.IOException;
@@ -204,7 +208,68 @@ public class AndroidSNS{
         tupd.updateTopic(title, desc, media, isPrivate, TID, authkey);
     }
 
+    /**
+     *
+     * Obtains the description of a given topic.
+     *
+     * @param TID The ID of the topic (in format "g-[id]")
+     * @param isPrivate True if the topic is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The description from the supplied topic ID.
+     */
+    public String getTopicDescription(String TID, boolean isPrivate, String authkey) {
+        ensureConnection();
+        TopicRetriever tRet = new TopicRetriever( ENDPOINT );
+        return tRet.getDescriptionFromJSON(tRet.getTopicInfoJSON(TID, isPrivate, authkey));
+    }
 
+    /**
+     *
+     * Retrieves all of a user's private topics.
+     *
+     * @param userID The user ID (in format "u-[id]") to retrieve private topics from.
+     * @return A list of all of the user's private topics and their associated IDs (in format "grp-[id]")
+     */
+    public Map<String, String> getPrivateTopicMap(String userID) {
+        ensureConnection();
+        PrivateTopicsListRetriever ptlr = new PrivateTopicsListRetriever( ENDPOINT );
+
+        return ptlr.getList(userID);
+    }
+
+    /**
+     *
+     * Creates a new user.
+     *
+     * @param name User's actual name.
+     * @param username User's desired username.
+     * @param email User's email.
+     * @param password User's desired password.
+     * @return The ID of the new user (in format "u-[id]").
+     */
+    public String newUser(String name, String username, String email, String password)
+    {
+
+        ensureConnection();
+        UserCreator uCreat = new UserCreator( ENDPOINT );
+
+        return uCreat.createUser(name, username, email, password);
+
+    }
+
+    /**
+     *
+     * Deletes a user.
+     *
+     * @param id The ID of the user to delete (in format "u-[id]" )
+     * @param authkey The authentication key. See "acquireKey." The authentication key
+     *                must be obtained using the user-to-be-deleted's credentials.
+     */
+    public void deleteUser( String id , String authkey ) {
+        ensureConnection();
+        UserDeleter udel = new UserDeleter( ENDPOINT );
+        udel.execute( id, authkey );
+    }
 
 
 }

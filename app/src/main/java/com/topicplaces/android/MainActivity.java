@@ -12,23 +12,26 @@ import android.widget.Button;
 
 import com.topicplaces.android.AndroidSNS.AndroidSNS;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Button VerifyEmailButton, CreatePrivateTopicButon, UpdateTopicButton;
+    private Button DeleteUserButton, VerifyUserButton, NewUserButton;
     private String authKey, userID;
-    private String user, pass, email;
+    private String user, pass, email, name;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
     private String topicTitle = "Generic Test Name";
     private String TID, UID;
     private String topicDescription = "Generic test Description";
+    private Map privateMap, publicMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        VerifyEmailButton = (Button)findViewById(R.id.VerifyEmailButon);
-        VerifyEmailButton.setOnClickListener(new View.OnClickListener() {
+        VerifyUserButton = (Button)findViewById(R.id.VerifyUserButton);
+        VerifyUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -36,9 +39,8 @@ public class MainActivity extends AppCompatActivity {
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                user = "stanleyr001";
-                pass = "stanleyr001";
-                email = "stanleyr001@gmail.com";
+                user = "TestUser";
+                pass = "TestUser";
 
                 AndroidSNS sns = new AndroidSNS(ENDPOINT);
 
@@ -54,15 +56,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d("authKey ", authKey);
 
-                UID = sns.verifyEmail(email);
+                UID = sns.verifyUsername(user);
 
                 Log.d("UID", UID);
 
             }
         });
 
-        UpdateTopicButton = (Button)findViewById(R.id.UpdateTopicButton);
-        UpdateTopicButton.setOnClickListener(new View.OnClickListener() {
+        NewUserButton = (Button)findViewById(R.id.NewUserButton);
+        NewUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -70,8 +72,10 @@ public class MainActivity extends AppCompatActivity {
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                user = "stanleyr001";
-                pass = "stanleyr001";
+                name = "Test Name";
+                user = "TestUser";
+                pass = "TestUser";
+                email = "testuser@fakeemailaddress.net";
 
                 AndroidSNS sns = new AndroidSNS(ENDPOINT);
 
@@ -80,21 +84,24 @@ public class MainActivity extends AppCompatActivity {
 
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
+                /*
                 if (networkInfo != null && networkInfo.isConnected()) {
                     authKey = sns.acquireKey(user, pass);
                 }else{
                     Log.d("Network", "Failure to connect");
                 }
                 Log.d("authKey ", authKey);
+                */
 
-                sns.updateTopic(topicTitle, topicDescription, null, true, TID, authKey);
-                Log.d("UpdateTopic", "Topic updated");
+                UID = sns.newUser(name, user, email, pass);
+
+                Log.d("NewUser", UID);
 
             }
         });
 
-        CreatePrivateTopicButon = (Button)findViewById(R.id.CreatePrivateTopicButton);
-        CreatePrivateTopicButon.setOnClickListener(new View.OnClickListener() {
+        DeleteUserButton = (Button)findViewById(R.id.DeleteUserButton);
+        DeleteUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -102,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                user = "stanleyr001";
-                pass = "stanleyr001";
+                user = "TestUser";
+                pass = "TestUser";
 
                 AndroidSNS sns = new AndroidSNS(ENDPOINT);
 
@@ -119,10 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d("authKey ", authKey);
 
-                TID = sns.newPrivateTopic(topicTitle, authKey);
-
-                Log.d("PrivateTID", TID);
-
+                sns.deleteUser(UID, authKey);
+                Log.d("DeleteUser", "User Deleted");
             }
         });
     }

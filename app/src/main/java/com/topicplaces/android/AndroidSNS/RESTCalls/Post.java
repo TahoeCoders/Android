@@ -69,7 +69,6 @@ public class Post {
 
     public String execute() {
         try {
-            Log.d("POSTOutputSttring", outputString);
             urlConnection.getOutputStream().write(outputString.getBytes());
 
             //From ServiceDog
@@ -101,7 +100,6 @@ public class Post {
             Log.d("throwable", "t");
         }
 
-        Log.d("Post_returnString", returnString);
         return returnString;
     }
 
