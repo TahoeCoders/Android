@@ -42,12 +42,12 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/NewUserButton"
+        android:id="@+id/MessageTestButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Create New User"
+        android:text="Message Test"
         android:textSize="25sp"
         android:gravity="center"/>
 

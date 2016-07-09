@@ -1,5 +1,7 @@
 package com.topicplaces.android.AndroidSNS;
 
+import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
+import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
 import com.topicplaces.android.AndroidSNS.Topics.PrivateTopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Topics.TopicCreator;
 import com.topicplaces.android.AndroidSNS.Topics.TopicDeleter;
@@ -270,6 +272,102 @@ public class AndroidSNS{
         UserDeleter udel = new UserDeleter( ENDPOINT );
         udel.execute( id, authkey );
     }
+
+    /**
+     *
+     * Returns the contents of a given topic in JSON format.
+     *
+     * @param TID The ID of the topic (in format "t-[id]")
+     * @param isPrivate True if the given topic is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The JSON string of a given Topic
+     */
+    public String getTopicJSON(String TID, boolean isPrivate, String authkey) {
+        ensureConnection();
+        TopicRetriever tRet = new TopicRetriever( ENDPOINT );
+        return tRet.getTopicInfoJSON(TID, isPrivate, authkey);
+    }
+
+
+    /**
+     *
+     * Obtains the title/content of a given topic.
+     *
+     * @param TID The ID of the topic (in format "g-[id]")
+     * @param isPrivate True if the topic is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The title from the supplied topic ID.
+     */
+    public String getTopicTitle(String TID, boolean isPrivate, String authkey) {
+        ensureConnection();
+        TopicRetriever tRet = new TopicRetriever( ENDPOINT );
+        return tRet.getTitleFromJSON(tRet.getTopicInfoJSON( TID, isPrivate, authkey));
+    }
+
+    /**
+     *
+     * Retrieves a map of public messages to their corresponding message IDs.
+     *
+     * @param TID The public topic ID (in format "t-[id]") to obtain messages from.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return A map of the topic's public messages to their corresponding message IDs.
+     */
+    public Map<String, String> getPublicMessageMap(String TID, String authkey) {
+        ensureConnection();
+        MessageListRetriever glr = new MessageListRetriever( ENDPOINT );
+
+        Map<String,String> list = glr.getMap(TID, false, authkey);
+        return list;
+    }
+
+    /**
+     *
+     * Retrieves a map of private messages to their corresponding message IDs.
+     *
+     * @param TID The private topic ID (in format "grp-[id]") to obtain messages from.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return A map of the topic's private messages to their corresponding message IDs.
+     */
+    public Map<String, String> getPrivateMessageMap(String TID, String authkey) {
+        ensureConnection();
+        MessageListRetriever glr = new MessageListRetriever( ENDPOINT );
+
+        Map<String, String> lis = glr.getMap(TID, true, authkey);
+
+        return lis;
+    }
+
+    /**
+     *
+     * Returns the contents of a given message in JSON format.
+     *
+     * @param GID The ID of the message (in format "g-[id]")
+     * @param isPrivate True if the given message is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The JSON string of a given message.
+     */
+    public String getMessageJSON(String GID, boolean isPrivate, String authkey) {
+        ensureConnection();
+
+        MessageRetriever gret = new MessageRetriever( ENDPOINT );
+        return gret.getMessageJSON(GID, isPrivate, authkey);
+    }
+
+    /**
+     *
+     * Obtains the title/content of a given message.
+     *
+     * @param GID The ID of the message (in format "g-[id]")
+     * @param isPrivate True if the message is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The title from the supplied message ID.
+     */
+    public String getMessageTitle(String GID, boolean isPrivate, String authkey) {
+        ensureConnection();
+        MessageRetriever gret = new MessageRetriever( ENDPOINT );
+        return gret.getTitleFromJSON(gret.getMessageJSON(GID, isPrivate, authkey));
+    }
+
 
 
 }

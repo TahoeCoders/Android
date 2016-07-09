@@ -16,12 +16,16 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button DeleteUserButton, VerifyUserButton, NewUserButton;
+    private Button DeleteUserButton, VerifyUserButton, MessageTestButton;
     private String authKey, userID;
     private String user, pass, email, name;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
     private String topicTitle = "Generic Test Name";
-    private String TID, UID;
+    private String privateGID = "g-2mir3ps0sjso48b087f";
+    private String privateTID = "grp-2mi8328tt5ap0vvtaxt";
+    private String publicTID ="t-5snnt6hf4giebtxts6";
+    private String publicGID = "g-2kubn36i3h14aou13hh";
+    private String UID;
     private String topicDescription = "Generic test Description";
     private Map privateMap, publicMap;
 
@@ -39,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                user = "TestUser";
-                pass = "TestUser";
+                user = "stanleyr001";
+                pass = "stanleyr001";
 
                 AndroidSNS sns = new AndroidSNS(ENDPOINT);
 
@@ -54,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     Log.d("Network", "Failure to connect");
                 }
-                Log.d("authKey ", authKey);
 
                 UID = sns.verifyUsername(user);
 
@@ -63,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        NewUserButton = (Button)findViewById(R.id.NewUserButton);
-        NewUserButton.setOnClickListener(new View.OnClickListener() {
+        MessageTestButton = (Button)findViewById(R.id.MessageTestButton);
+        MessageTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -72,10 +75,8 @@ public class MainActivity extends AppCompatActivity {
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                name = "Test Name";
-                user = "TestUser";
-                pass = "TestUser";
-                email = "testuser@fakeemailaddress.net";
+                user = "stanleyr001";
+                pass = "stanleyr001";;
 
                 AndroidSNS sns = new AndroidSNS(ENDPOINT);
 
@@ -84,18 +85,16 @@ public class MainActivity extends AppCompatActivity {
 
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
-                /*
+
                 if (networkInfo != null && networkInfo.isConnected()) {
                     authKey = sns.acquireKey(user, pass);
                 }else{
                     Log.d("Network", "Failure to connect");
                 }
-                Log.d("authKey ", authKey);
-                */
 
-                UID = sns.newUser(name, user, email, pass);
+                String messageTitle = sns.getMessageTitle(publicGID, false, authKey);
+                Log.d("MessageTitle", messageTitle);
 
-                Log.d("NewUser", UID);
 
             }
         });
@@ -109,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
 
-                user = "TestUser";
-                pass = "TestUser";
+                user = "stanleyr001";
+                pass = "stanleyr001";
 
                 AndroidSNS sns = new AndroidSNS(ENDPOINT);
 
@@ -124,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     Log.d("Network", "Failure to connect");
                 }
-                Log.d("authKey ", authKey);
 
                 sns.deleteUser(UID, authKey);
                 Log.d("DeleteUser", "User Deleted");
