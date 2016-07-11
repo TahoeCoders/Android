@@ -4,6 +4,7 @@ import com.topicplaces.android.AndroidSNS.Message.MessageDeleter;
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessagePoster;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionMaker;
+import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageUpdater;
 import com.topicplaces.android.AndroidSNS.Message.PrivateMessagePoster;
@@ -541,6 +542,36 @@ public class AndroidSNS{
         }
 
         return optionID;
+    }
+
+    /**
+     *
+     * Retrives options Strings and their IDs from a given message.
+     *
+     * @param GID The ID of the message to retrieve options from.
+     * @param isPrivate True if the message is private. False if public.
+     * @param authkey The authentication key. See "acquireKey."
+     * @return A map of options to their IDs for a given message.
+     */
+    public Map<String, String> getOptionsIDMap(String GID, Boolean isPrivate, String authkey) {
+        ensureConnection();
+        OptionRetriever optRet = new OptionRetriever( ENDPOINT );
+        return optRet.getIDMap(GID, isPrivate, authkey);
+    }
+
+    /**
+     *
+     * Retrives options Strings and their answer counts from a given message.
+     *
+     * @param GID The ID of the message to retrieve options from.
+     * @param isPrivate True if the message is private. False if public.
+     * @param authkey The authentication key. See "acquireKey."
+     * @return A map of options to the number of responders.
+     */
+    public Map<String, String> getOptionsAnswerMap(String GID, Boolean isPrivate, String authkey) {
+        ensureConnection();
+        OptionRetriever optRet = new OptionRetriever( ENDPOINT );
+        return optRet.getAnswerMap(GID, isPrivate, authkey);
     }
 
 }

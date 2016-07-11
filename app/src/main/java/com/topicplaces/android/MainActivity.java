@@ -95,8 +95,19 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
-                String OID = sns.newMessageOption("This other option from AndroidSNS", privateGID, authKey);
-                Log.d("OID", OID);
+                Map<String,String> optionsID = sns.getOptionsIDMap(privateGID, true, authKey);
+                Map<String,String> optionsAnswers = sns.getOptionsAnswerMap(privateGID, true, authKey);
+
+                for (Map.Entry<String, String> entry : optionsID.entrySet())
+                {
+                    Log.d("OptionsID", entry.getKey() + "=" + entry.getValue());
+                }
+
+                for (Map.Entry<String, String> entry : optionsAnswers.entrySet())
+                {
+                    Log.d("OptionsAnswers", entry.getKey() + "=" + entry.getValue());
+                }
+
 
             }
         });
