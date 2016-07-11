@@ -92,9 +92,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
-                String messageTitle = sns.getMessageTitle(publicGID, false, authKey);
-                Log.d("MessageTitle", messageTitle);
-
+                sns.updateMessage("Generic Message", "Generic Description", null, privateGID, authKey);
+                Log.d("UpdateMessage", "Message updated");
 
             }
         });

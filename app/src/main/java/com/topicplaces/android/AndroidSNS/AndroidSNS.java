@@ -2,6 +2,7 @@ package com.topicplaces.android.AndroidSNS;
 
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
+import com.topicplaces.android.AndroidSNS.Message.MessageUpdater;
 import com.topicplaces.android.AndroidSNS.Topics.PrivateTopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Topics.TopicCreator;
 import com.topicplaces.android.AndroidSNS.Topics.TopicDeleter;
@@ -368,6 +369,42 @@ public class AndroidSNS{
         return gret.getTitleFromJSON(gret.getMessageJSON(GID, isPrivate, authkey));
     }
 
+    /**
+     *
+     * Updates an existing message.
+     *
+     * @param mess The content/title of the message. If null, message remains unchanged.
+     * @param desc The description of the message. If null, description remains unchanged.
+     * @param mediaID The media (in format "m-[id]") of the message. If null, media remains unchanged.
+     * @param GID The message ID (in format "g-[id]").
+     * @param authkey The authentication key. See "acquireKey"
+     */
+    public void updateMessage(String mess, String desc, String mediaID, String GID, String authkey) {
+        ensureConnection();
+        MessageUpdater gupd = new MessageUpdater( ENDPOINT );
+        gupd.execute(mess, desc, mediaID, GID, authkey);
+    }
+
+    /**
+     *
+     * Posts a new message to a specific private topic.
+     *
+     * @param title The title/name of the message.
+     * @param desc The description of the message.
+     * @param mediaID The media (in format "m-[id]")of the message. See "newMediaFromLocal" or "newMediaFromURL."
+     * @param topicID The ID code of the private topic (in format "grp-[id]")
+     * @param authkey The authentication key. See "acquireKey."
+     * @return The ID code of the newly created message (in format "g-[id]")
+     */
+    public String newPrivateMessage(String title, String desc, String mediaID, String topicID, String authkey)
+    {
+        ensureConnection();
+
+        PrivateMessagePoster tp = new PrivateMessagePoster( ENDPOINT );
+        String pM = tp.execute(title, desc, mediaID, authkey, topicID);
+
+        return pM;
+    }
 
 
 }
