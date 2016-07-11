@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String privateGID = "g-2mir3ps0sjso48b087f";
     private String privateTID = "grp-2mi8328tt5ap0vvtaxt";
-    private String publicTID ="t-5snnt6hf4giebtxts6";
+    private String publicTID ="t-2millmwkjg5job59e4a";
     private String publicGID = "g-2kubn36i3h14aou13hh";
     private String UID;
 
@@ -94,9 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
-                String messageID = sns.newPrivateMessage(messageTitle, messageDescription, null, privateTID, authKey);
+                String messageID = sns.newPublicMessage(messageTitle, messageDescription, null, publicTID, authKey);
                 Log.d("MessageCreated ID", messageID);
-
             }
         });
 

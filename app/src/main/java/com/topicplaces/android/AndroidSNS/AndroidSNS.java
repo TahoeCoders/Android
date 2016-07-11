@@ -1,6 +1,7 @@
 package com.topicplaces.android.AndroidSNS;
 
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
+import com.topicplaces.android.AndroidSNS.Message.MessagePoster;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageUpdater;
 import com.topicplaces.android.AndroidSNS.Message.PrivateMessagePoster;
@@ -408,6 +409,25 @@ public class AndroidSNS{
         return pM;
     }
 
+    /**
+     *
+     * Posts a new message to a specific public topic.
+     *
+     * @param title The title/name of the message.
+     * @param desc The description of the message.
+     * @param mediaID The media (in format "m-[id]") of the message. See "newMediaFromLocal" or "newMediaFromURL."
+     * @param topicID The ID code of the private topic (in format "t-[id]")
+     * @param authkey The authentication key. See "acquireKey."
+     * @return The ID code of the newly created message (in format "g-[id]")
+     */
+    public String newPublicMessage(String title, String desc, String mediaID, String topicID, String authkey)
+    {
+        ensureConnection();
+
+        MessagePoster tp = new MessagePoster( ENDPOINT );
+
+        return tp.execute(title, desc, mediaID, authkey, topicID);
+    }
 
 
 }
