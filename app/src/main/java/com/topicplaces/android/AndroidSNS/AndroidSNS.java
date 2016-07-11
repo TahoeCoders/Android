@@ -21,6 +21,7 @@ import com.topicplaces.android.AndroidSNS.Users.RESTLogin;
 import com.topicplaces.android.AndroidSNS.Users.SubscriptionDeleter;
 import com.topicplaces.android.AndroidSNS.Users.UserCreator;
 import com.topicplaces.android.AndroidSNS.Users.UserDeleter;
+import com.topicplaces.android.AndroidSNS.Users.UserInviter;
 import com.topicplaces.android.AndroidSNS.Users.UserRetriever;
 
 import java.io.IOException;
@@ -677,6 +678,22 @@ public class AndroidSNS{
         return nmap;
     }
 
+
+    /**
+     *
+     * Invites a user to a private topic.
+     *
+     * @param UID The ID of the user to invite (in format "u-[id]")
+     * @param PID The private topic to invite the user to (in format "grp-[id]")
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The invitation ID ("i-[id]")
+     */
+    public String invite(String UID, String PID, String authkey) {
+        ensureConnection();
+
+        UserInviter ui = new UserInviter( ENDPOINT );
+        return ui.inviteUserToPID(UID, PID, authkey);
+    }
 
 
 }
