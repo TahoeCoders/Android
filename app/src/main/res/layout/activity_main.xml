@@ -12,12 +12,12 @@
     tools:context="com.topicplaces.android.MainActivity">
 
     <Button
-        android:id="@+id/DeleteUserButton"
+        android:id="@+id/NewLinkButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Delete User"
+        android:text="Generate New Link"
         android:textSize="25sp"
         android:gravity="center"/>
 

@@ -4,6 +4,7 @@ import com.topicplaces.android.AndroidSNS.Message.MessageDeleter;
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessagePoster;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.AttributeListRetriever;
+import com.topicplaces.android.AndroidSNS.Message.MessageRelated.LinkMaker;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionMaker;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
@@ -605,6 +606,20 @@ public class AndroidSNS{
         AttributeListRetriever alr = new AttributeListRetriever( ENDPOINT );
 
         return alr.getList(GID, isPrivate, authkey);
+    }
+
+    /**
+     *
+     * Adds a link to a message.
+     *
+     * @param URL The URL for the link
+     * @param GID The message to add the link to
+     * @param authkey The authentication key. See "acquireKey"
+     */
+    public void newLink( String URL, String GID, String authkey ) {
+
+        LinkMaker lMak = new LinkMaker( ENDPOINT );
+        lMak.createLinkForGame( URL, GID, authkey );
     }
 
 }
