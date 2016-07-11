@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button NewLinkButton, VerifyUserButton, MessageTestButton;
+    private Button FollowTestButton, VerifyUserButton, MessageTestButton;
     private String authKey, userID;
     private String user, pass, email, name;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        NewLinkButton = (Button)findViewById(R.id.NewLinkButton);
-        NewLinkButton.setOnClickListener(new View.OnClickListener() {
+        FollowTestButton = (Button)findViewById(R.id.FollowTestButton);
+        FollowTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -149,8 +149,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
-                sns.newLink("Google.com", privateGID, authKey);
-                Log.d("NewLink", "Link Added");
             }
         });
     }

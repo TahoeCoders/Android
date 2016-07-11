@@ -12,12 +12,12 @@
     tools:context="com.topicplaces.android.MainActivity">
 
     <Button
-        android:id="@+id/NewLinkButton"
+        android:id="@+id/FollowTestButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:text="Generate New Link"
+        android:text="Follow Test"
         android:textSize="25sp"
         android:gravity="center"/>
 

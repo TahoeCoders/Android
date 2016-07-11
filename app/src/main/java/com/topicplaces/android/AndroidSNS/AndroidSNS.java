@@ -17,6 +17,7 @@ import com.topicplaces.android.AndroidSNS.Topics.TopicRetriever;
 import com.topicplaces.android.AndroidSNS.Topics.TopicUpdater;
 import com.topicplaces.android.AndroidSNS.Topics.TopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Users.RESTLogin;
+import com.topicplaces.android.AndroidSNS.Users.SubscriptionDeleter;
 import com.topicplaces.android.AndroidSNS.Users.UserCreator;
 import com.topicplaces.android.AndroidSNS.Users.UserDeleter;
 import com.topicplaces.android.AndroidSNS.Users.UserRetriever;
@@ -621,5 +622,21 @@ public class AndroidSNS{
         LinkMaker lMak = new LinkMaker( ENDPOINT );
         lMak.createLinkForGame( URL, GID, authkey );
     }
+
+    /**
+     *
+     * Deletes a subscription.
+     *
+     * @param subID The ID of the subscription to delete (in format "sub-[id]" )
+     * @param authkey The authentication key. See "acquireKey"
+     */
+    public void deleteSubscription( String subID, String authkey ) {
+        ensureConnection();
+
+        SubscriptionDeleter sd = new SubscriptionDeleter( ENDPOINT );
+        sd.execute( subID, authkey );
+    }
+
+
 
 }
