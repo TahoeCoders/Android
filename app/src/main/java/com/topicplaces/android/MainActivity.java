@@ -21,10 +21,10 @@ public class MainActivity extends AppCompatActivity {
     private String user, pass, email, name;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
 
-    private String privateGID = "g-2mir3ps0sjso48b087f";
+    private String privateGID = "g-2mj68gsf0tlt79cwrmn";
     private String privateTID = "grp-2mi8328tt5ap0vvtaxt";
     private String publicTID ="t-2millmwkjg5job59e4a";
-    private String publicGID = "g-2kubn36i3h14aou13hh";
+    private String publicGID = "g-2mj6c9p0k5t3ixtz88w";
     private String UID;
 
     private String messageDescription = "A message description to test adding a new message";
@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
-                String messageID = sns.newPublicMessage(messageTitle, messageDescription, null, publicTID, authKey);
-                Log.d("MessageCreated ID", messageID);
+                sns.deleteMessage(privateGID, authKey);
+                Log.d("MessageDeleter", "Message Deleted");
             }
         });
 

@@ -1,5 +1,6 @@
 package com.topicplaces.android.AndroidSNS;
 
+import com.topicplaces.android.AndroidSNS.Message.MessageDeleter;
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessagePoster;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
@@ -427,6 +428,19 @@ public class AndroidSNS{
         MessagePoster tp = new MessagePoster( ENDPOINT );
 
         return tp.execute(title, desc, mediaID, authkey, topicID);
+    }
+
+    /**
+     *
+     * Deletes a message.
+     *
+     * @param GID The ID of the message to delete (in format "g-[id]" )
+     * @param authkey The authentication key. See "acquireKey."
+     */
+    public void deleteMessage(String GID, String authkey) {
+        ensureConnection();
+        MessageDeleter gd = new MessageDeleter( ENDPOINT );
+        gd.execute( GID, authkey );
     }
 
 
