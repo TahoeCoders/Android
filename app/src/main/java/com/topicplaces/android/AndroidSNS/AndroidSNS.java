@@ -3,6 +3,7 @@ package com.topicplaces.android.AndroidSNS;
 import com.topicplaces.android.AndroidSNS.Message.MessageDeleter;
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessagePoster;
+import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionMaker;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageUpdater;
 import com.topicplaces.android.AndroidSNS.Message.PrivateMessagePoster;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.Map;
 
 public class AndroidSNS{
@@ -479,6 +481,7 @@ public class AndroidSNS{
      */
 
     public String getTopicStreamJson(String TID, Boolean isPrivate, String authKey) {
+        ensureConnection();
         TopicRetriever tr = new TopicRetriever(ENDPOINT);
         return tr.getTopicStreamJSON(TID, isPrivate, authKey);
     }
@@ -497,4 +500,47 @@ public class AndroidSNS{
         MessageRetriever gret = new MessageRetriever( ENDPOINT );
         return gret.getDescriptionFromJSON(gret.getMessageJSON(GID, isPrivate, authkey));
     }
+
+    /**
+     *
+     * Retrieves a list of private message IDs in a given topic.
+     *
+     * @param TID The private topic ID (in format "grp-[id]") to obtain messages from.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return A map of the topic's private messages to their corresponding message IDs.
+     */
+    public List<String> getPrivateMessageGIDList(String TID, String authkey) {
+        ensureConnection();
+        MessageListRetriever glr = new MessageListRetriever( ENDPOINT );
+
+        List<String> lis = glr.getGIDList( TID, true, authkey);
+
+        return lis;
+    }
+
+    /**
+     *
+     * Adds an option to a message.
+     *
+     * @param text The option name/content.
+     * @param gameID The message ID (in format "g-[id]") to add an option to.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The ID of the created option.
+     */
+    public String newMessageOption(String text, String gameID, String authkey)
+    {
+        ensureConnection();
+
+        OptionMaker oMak = new OptionMaker( ENDPOINT );
+        String optionID = oMak.createOptionForGame(text, gameID, authkey);
+
+        if ( optionID.equals( "" ) )
+        {
+            //System.err.println( "Unable to create new option" );
+            return "";
+        }
+
+        return optionID;
+    }
+
 }
