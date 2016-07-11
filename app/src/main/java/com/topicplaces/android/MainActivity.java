@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.topicplaces.android.AndroidSNS.AndroidSNS;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
+                /*
                 Map<String,String> optionsID = sns.getOptionsIDMap(privateGID, true, authKey);
                 Map<String,String> optionsAnswers = sns.getOptionsAnswerMap(privateGID, true, authKey);
 
@@ -107,7 +109,17 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Log.d("OptionsAnswers", entry.getKey() + "=" + entry.getValue());
                 }
+                */
 
+                Map<String, String> attributesMap = new HashMap<String, String>();
+                attributesMap.put("Jane", "Black");
+                attributesMap.put("Ken", "White");
+
+                Map<String,String> attributes = sns.getAttributes(privateGID, true, authKey);
+                for (Map.Entry<String, String> entry : attributes.entrySet())
+                {
+                    Log.d("Attributes", entry.getKey() + " = " + entry.getValue());
+                }
 
             }
         });

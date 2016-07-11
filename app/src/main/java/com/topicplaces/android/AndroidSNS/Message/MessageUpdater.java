@@ -1,7 +1,5 @@
 package com.topicplaces.android.AndroidSNS.Message;
 
-import android.util.Log;
-
 import com.topicplaces.android.AndroidSNS.RESTCalls.Put;
 
 import org.json.JSONArray;
@@ -136,8 +134,6 @@ public class MessageUpdater {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        Log.d("JSON", json.toString());
 
         put.addJson( json );
         

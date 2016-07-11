@@ -3,6 +3,7 @@ package com.topicplaces.android.AndroidSNS;
 import com.topicplaces.android.AndroidSNS.Message.MessageDeleter;
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessagePoster;
+import com.topicplaces.android.AndroidSNS.Message.MessageRelated.AttributeListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionMaker;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
@@ -572,6 +573,38 @@ public class AndroidSNS{
         ensureConnection();
         OptionRetriever optRet = new OptionRetriever( ENDPOINT );
         return optRet.getAnswerMap(GID, isPrivate, authkey);
+    }
+
+    /**
+     *
+     * Adds attributes (keys and corresponding values) to a message.
+     *
+     * @param attributes The attributes to add. A map of the attributes and their values.
+     * @param GID The message ID (in format "g-[id]") to add attributes to.
+     * @param authkey The authentication key. See "acquireKey"
+     */
+    public void newMessageAttributes(Map<String, String> attributes, String GID, String authkey)
+    {
+        ensureConnection();
+
+        MessageUpdater gupd = new MessageUpdater( ENDPOINT );
+        gupd.addAttributes(attributes, GID, authkey);
+    }
+
+    /**
+     * Retrieves a list of keys and corresponding values posted to a given message.
+     *
+     * @param GID The message ID (in format "g-[id]") to retrieve attributes from.
+     * @param isPrivate True if the message is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return A Map containing the keys and corresponding values posted to a message.
+     */
+    public Map<String,String> getAttributes( String GID, Boolean isPrivate, String authkey ) {
+        ensureConnection();
+
+        AttributeListRetriever alr = new AttributeListRetriever( ENDPOINT );
+
+        return alr.getList(GID, isPrivate, authkey);
     }
 
 }
