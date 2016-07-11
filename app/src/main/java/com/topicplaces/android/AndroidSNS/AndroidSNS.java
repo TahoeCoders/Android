@@ -4,6 +4,7 @@ import com.topicplaces.android.AndroidSNS.Message.MessageDeleter;
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessagePoster;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.AttributeListRetriever;
+import com.topicplaces.android.AndroidSNS.Message.MessageRelated.FollowerListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.LinkMaker;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionMaker;
 import com.topicplaces.android.AndroidSNS.Message.MessageRelated.OptionRetriever;
@@ -26,6 +27,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -635,6 +638,43 @@ public class AndroidSNS{
 
         SubscriptionDeleter sd = new SubscriptionDeleter( ENDPOINT );
         sd.execute( subID, authkey );
+    }
+
+    /**
+     *
+     * Gets a map of followers to their corresponding subscription IDs
+     *
+     * @param ID Identifier of the topic, message, or user to retrieve followers for.
+     * @return A map of followers to their corresponding subscription IDs.
+     */
+    public Map<String, String> getFollowerSubMap(String ID) {
+        ensureConnection();
+
+        FollowerListRetriever flr = new FollowerListRetriever( ENDPOINT );
+        return flr.getUserSubscriptionMap(ID);
+    }
+
+    /**
+     *
+     * Gets a map of followers mapped to their user IDs
+     *
+     * @param ID Identifier of the topic, message, or user to retrieve followers for.
+     * @return A map of followers to their corresponding user IDs.
+     */
+    public Map<String, String> getFollowerIDMap(String ID) {
+        ensureConnection();
+
+        FollowerListRetriever flr = new FollowerListRetriever( ENDPOINT );
+        Map<String, String> map = flr.getUserIDMap(ID);
+        Map<String, String> nmap = new HashMap<String, String>();
+
+        Iterator<String> iter = map.keySet().iterator();
+        while( iter.hasNext() ) {
+            String next = iter.next();
+            nmap.put( getUsernameFromID( next ), next );
+        }
+
+        return nmap;
     }
 
 

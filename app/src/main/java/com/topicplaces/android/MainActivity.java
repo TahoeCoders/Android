@@ -149,6 +149,15 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
+                Map<String,String> subMap = sns.getFollowerSubMap(sns.verifyUsername(user));
+                for (Map.Entry<String, String> entry : subMap.entrySet()) {
+                    Log.d("Subscribers", entry.getKey() + " = " + entry.getValue());
+                }
+                Map<String,String> IDMap = sns.getFollowerIDMap(sns.verifyUsername(user));
+                for (Map.Entry<String, String> entry : IDMap.entrySet()) {
+                    Log.d("ID's", entry.getKey() + " = " + entry.getValue());
+                }
+
             }
         });
     }
