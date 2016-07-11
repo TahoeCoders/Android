@@ -47,4 +47,19 @@ public class UserRetriever {
             return userID;
         }
     }
+
+    public String getUsernameFromID( String id ) {
+        String s = getJSON( id );
+
+        int ind2 = s.indexOf("\"username\":\"");
+        if ( ind2 == -1 ) {
+            System.out.println( "Invalid ID" );
+            return null;
+        }
+        ind2 = s.indexOf(":\"", ind2 ) + 2;
+
+        String username = s.substring( ind2, s.indexOf( "\"", ind2) );
+
+        return username;
+    }
 }

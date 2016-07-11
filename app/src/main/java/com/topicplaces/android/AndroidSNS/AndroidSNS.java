@@ -279,14 +279,14 @@ public class AndroidSNS{
 
     /**
      *
-     * Returns the contents of a given topic in JSON format.
+     * Returns the info contents of a given topic in JSON format.
      *
      * @param TID The ID of the topic (in format "t-[id]")
      * @param isPrivate True if the given topic is private. False if public.
      * @param authkey The authentication key. See "acquireKey"
      * @return The JSON string of a given Topic
      */
-    public String getTopicJSON(String TID, boolean isPrivate, String authkey) {
+    public String getTopicInfoJson(String TID, boolean isPrivate, String authkey) {
         ensureConnection();
         TopicRetriever tRet = new TopicRetriever( ENDPOINT );
         return tRet.getTopicInfoJSON(TID, isPrivate, authkey);
@@ -443,5 +443,58 @@ public class AndroidSNS{
         gd.execute( GID, authkey );
     }
 
+    /**
+     *
+     * Gets the username associated with a valid user at the endpoint.
+     *
+     * @param user The user ID to retrieve the username for.
+     * @return The ID of the user (in format "u-[id]"), or the empty string ("") if the user doesn't exist.
+     */
+    public String getUsernameFromID(String user) {
+        ensureConnection();
+        UserRetriever uGett = new UserRetriever( ENDPOINT );
 
+        return uGett.getUsernameFromID(user);
+    }
+
+    /**
+     * Gets the Json associated with the user.
+     *
+     * @param UID The userID.
+     * @return The JSON of the user in String form.
+     */
+
+    public String getUserJson(String UID) {
+        UserRetriever ur = new UserRetriever(ENDPOINT);
+        return ur.getJSON(UID);
+    }
+
+    /**
+     * Get the Stream JSON associated with the topic.
+     *
+     * @param TID The topicID.
+     * @param isPrivate True if private. False if public.
+     * @param authKey The auth key of the user.
+     * @return The Stream JSON in String form.
+     */
+
+    public String getTopicStreamJson(String TID, Boolean isPrivate, String authKey) {
+        TopicRetriever tr = new TopicRetriever(ENDPOINT);
+        return tr.getTopicStreamJSON(TID, isPrivate, authKey);
+    }
+
+    /**
+     *
+     * Obtains the description of a given message.
+     *
+     * @param GID The ID of the message (in format "g-[id]")
+     * @param isPrivate True if the message is private. False if public.
+     * @param authkey The authentication key. See "acquireKey"
+     * @return The description from the supplied message ID.
+     */
+    public String getMessageDescription(String GID, boolean isPrivate, String authkey) {
+        ensureConnection();
+        MessageRetriever gret = new MessageRetriever( ENDPOINT );
+        return gret.getDescriptionFromJSON(gret.getMessageJSON(GID, isPrivate, authkey));
+    }
 }
