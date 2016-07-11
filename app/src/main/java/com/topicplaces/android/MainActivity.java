@@ -20,13 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private String authKey, userID;
     private String user, pass, email, name;
     final String ENDPOINT = "http://tse.topicplaces.com/api/2/";
-    private String topicTitle = "Generic Test Name";
+
     private String privateGID = "g-2mir3ps0sjso48b087f";
     private String privateTID = "grp-2mi8328tt5ap0vvtaxt";
     private String publicTID ="t-5snnt6hf4giebtxts6";
     private String publicGID = "g-2kubn36i3h14aou13hh";
     private String UID;
-    private String topicDescription = "Generic test Description";
+
+    private String messageDescription = "A message description to test adding a new message";
+    private String messageTitle = "A new message from AndroidSNS!!";
     private Map privateMap, publicMap;
 
     @Override
@@ -92,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Network", "Failure to connect");
                 }
 
-                sns.updateMessage("Generic Message", "Generic Description", null, privateGID, authKey);
-                Log.d("UpdateMessage", "Message updated");
+                String messageID = sns.newPrivateMessage(messageTitle, messageDescription, null, privateTID, authKey);
+                Log.d("MessageCreated ID", messageID);
 
             }
         });

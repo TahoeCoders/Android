@@ -1,6 +1,14 @@
 package com.topicplaces.android.AndroidSNS.Message;
 
 
+import android.util.Log;
+
+import com.topicplaces.android.AndroidSNS.RESTCalls.Post;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by servicedog on 7/8/15.
  */
@@ -13,7 +21,7 @@ public class PrivateMessagePoster {
         ENDPOINT = end;
     }
 
-    /*
+
     public String execute( String mess, String desc, String mediaID, String authkey, String tid )
     {
 
@@ -23,9 +31,8 @@ public class PrivateMessagePoster {
         JSONObject json = new JSONObject();
 
         try {
-
             JSONArray grou = new JSONArray();
-            grou.put(new JsonPrimitive(tid));
+            grou.put(tid);
             json.put("groups", grou);
 
             json.put("text", mess);
@@ -39,6 +46,7 @@ public class PrivateMessagePoster {
             json.put("context", context);
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d("EXCEPTION", "Malformed JSON");
         }
 
         // Add JSON entity to post
@@ -53,11 +61,8 @@ public class PrivateMessagePoster {
         
         index = response.indexOf( "g-", index );
         
-        return response.substring( 
-        		index, 
-        		response.indexOf( "\"", index ) 
-        		); 
+        return response.substring(index, response.indexOf( "\"", index ));
  
     }
-    */
+
 }

@@ -3,6 +3,7 @@ package com.topicplaces.android.AndroidSNS;
 import com.topicplaces.android.AndroidSNS.Message.MessageListRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageRetriever;
 import com.topicplaces.android.AndroidSNS.Message.MessageUpdater;
+import com.topicplaces.android.AndroidSNS.Message.PrivateMessagePoster;
 import com.topicplaces.android.AndroidSNS.Topics.PrivateTopicsListRetriever;
 import com.topicplaces.android.AndroidSNS.Topics.TopicCreator;
 import com.topicplaces.android.AndroidSNS.Topics.TopicDeleter;
@@ -396,6 +397,7 @@ public class AndroidSNS{
      * @param authkey The authentication key. See "acquireKey."
      * @return The ID code of the newly created message (in format "g-[id]")
      */
+
     public String newPrivateMessage(String title, String desc, String mediaID, String topicID, String authkey)
     {
         ensureConnection();
@@ -405,6 +407,7 @@ public class AndroidSNS{
 
         return pM;
     }
+
 
 
 }
